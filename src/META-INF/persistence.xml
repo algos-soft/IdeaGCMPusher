@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+
+    <persistence-unit name="MySqlUnit">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+
+        <!--Le entity astratte (@MappedSuperclass) vanno obbligatoriamente listate-->
+        <class>it.algos.webbase.web.entity.BaseEntity</class>
+
+        <class>com.gcm.pusher.device.Device</class>
+        <class>com.gcm.pusher.log.Log</class>
+
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+        <properties>
+            <property name="javax.persistence.jdbc.platform"
+                      value="org.eclipse.persistence.platform.database.MySQLPlatform"/>
+            <property name="javax.persistence.target-database" value="MySQL"/>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gcm?useUnicode=yes&amp;characterEncoding=UTF-8"/>
+
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.password" value=""/>
+            <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
+            <property name="eclipselink.ddl-generation.output-mode" value="database"/>
+
+            <!--per vedere l'SQL di tutte le query-->
+            <property name="eclipselink.logging.level" value="FINE"/>
+
+            <!--per generare il DDL su file-->
+            <!--<property name="eclipselink.ddl-generation.output-mode" value="sql-script" />-->
+            <!--<property name="eclipselink.create-ddl-jdbc-file-name" value="ddl.sql" />-->
+            <!--<property name="eclipselink.application-location" value="/Users/Gac" />-->
+
+
+        </properties>
+    </persistence-unit>
+
+</persistence>
+

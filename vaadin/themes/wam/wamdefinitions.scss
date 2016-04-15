@@ -1,0 +1,351 @@
+// Global variable overrides. Must be declared before importing Valo.
+
+// Defines the plaintext font size, weight and family. Font size affects general component sizing.
+$v-font-size: 18px;
+$v-font-weight: 400;
+//$v-font-family: "Open Sans", sans-serif;
+//$v-background-color: #EEE;
+
+/* Import the base theme.*/
+// @import "../reindeer/reindeer.scss";
+//noinspection CssUnknownTarget
+@import "../valo/valo.scss";
+
+/* This contains all of your theme.*/
+/* If somebody wants to extend the theme she will include this mixin. */
+@mixin wamstyles {
+
+  /* Include all the styles from the imported theme */
+  @include valo;
+
+  /* Insert your theme rules here */
+  .v-menubar-mainmenu {
+    background: yellow;
+    font-family: "Lucida Sans", Georgia, Serif;
+    font-size: large;
+    border: 5px solid white;
+  }
+  .mymenubar {
+    color: white;
+    background: #0B6CFF;
+    font-family: Arial;
+    font-size: 24px;
+    font-heith: 80px;
+    font-weight: bold;
+    border: 5px solid white;
+    height: 44px;
+  }
+  .mybutton {
+    color: white;
+    background: #0B6CFF;
+    font-family: Arial;
+    font-size: 24px;
+    font-weight: bold;
+    height: 44px;
+  }
+  .toolbar {
+    background: #D8D8D8;
+  }
+
+  .yellowBg {
+    background: #FFFF99;
+  }
+
+  .greenBg {
+    background: #7FCA9F;
+  }
+
+  .blueBg {
+    background: #94DAF0;
+  }
+
+  .pinkBg {
+    background: #FF9999;
+  }
+
+  .redBg {
+    background: #F0311E;
+  }
+
+  .red {
+    color: red;
+  }
+
+  .darkGrayBg {
+    background: #5d5d5d;
+  }
+
+  .v-textfield-align-left {
+    text-align: left;
+  }
+
+  .v-textfield-align-center {
+    text-align: center;
+  }
+
+  .v-textfield-align-right {
+    text-align: right;
+  }
+
+  .error-screen-msg {
+    font-size: 18px;
+    color: red
+  }
+
+  .v-menubar .v-menubar-menuitem-highlight {
+    color: white;
+    background: #6282A3;
+  }
+
+  .v-menubar-submenu .v-menubar-menuitem-highlight {
+    color: white;
+    background: #6282A3;
+  }
+
+  .v-icon {
+    color: blue;
+  }
+
+  // attributi di tutto il tabellone
+  .ctabellone {
+    font-size: 16px;
+  }
+
+  //@media screen and (max-width: 640px) {
+  //  .ctabellone {
+  //    font-size: 36px;
+  //  }
+  //}
+
+  // attributi ereditati dalle celle del tabellone
+  .cbasecell {
+    display: block;
+    white-space: nowrap;
+  }
+
+  // componente servizio
+  //$dark: rgba(218, 115, 0, 1);
+  //$light: rgba(218, 115, 0, 0.6);
+  .cservizio {
+    @extend .cbasecell;
+    border-top-style: solid;
+    border-top-width: 0.1em;
+    border-top-left-radius: 6px;
+    border-color: rgb(101, 101, 104);
+
+    //padding-top: 0.5em;
+    //cursor: pointer;
+
+    //background: $dark;
+    //background: -webkit-linear-gradient(top, $dark, $light, $dark);
+    //background: -moz-linear-gradient(top, $dark, $light, $dark);
+    //background: -o-linear-gradient(top, $dark, $light, $dark);
+    //background: linear-gradient(top, $dark, $light, $dark);
+  }
+
+  // titolo servizio nel tabellone
+  // (il colore di background è iniettato dinamicamente)
+  //$dark: rgb(101, 101, 104);
+  //$light: rgba(101, 101, 104, 0.6);
+  .cservizio-titolo {
+
+    //background: $dark;
+    //background: -webkit-linear-gradient(top, $dark, $light, $dark);
+    //background: -moz-linear-gradient(top, $dark, $light, $dark);
+    //background: -o-linear-gradient(top, $dark, $light, $dark);
+    //background: linear-gradient(top, $dark, $light, $dark);
+
+    color: white;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    font-weight: bold;
+    text-align: center;
+
+  }
+
+
+  //// titolo servizio a orario variabile
+  //$dark: rgb(186, 180, 0);
+  //$light: rgba(186, 180, 0, 0.6);
+  //.cservizio-variabile {
+  //  @extend .cservizio-ora;
+  //  background: $dark;
+  //  background: -webkit-linear-gradient(top, $dark, $light, $dark);
+  //  background: -moz-linear-gradient(top, $dark, $light, $dark);
+  //  background: -o-linear-gradient(top, $dark, $light, $dark);
+  //  background: linear-gradient(top, $dark, $light, $dark);
+  //}
+
+  .cpointer {
+    cursor: pointer;
+  }
+
+
+
+    // componente nome nel componente servizio
+  .cservizio-nome {
+    font-weight: bold;
+    //margin-left: 10%;
+  }
+
+  // componente funzione (singola funzione nel componente CFunzioni)
+  //$dark: rgb(42, 156, 218);
+  //$light: rgba(42, 156, 218, 0.6);
+  .cfunzione {
+    @extend .cbasecell;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    border-color: rgb(101, 101, 104);
+
+    //background: $dark;
+    //background: -webkit-linear-gradient(top, $dark, $light, $dark);
+    //background: -moz-linear-gradient(top, $dark, $light, $dark);
+    //background: -o-linear-gradient(top, $dark, $light, $dark);
+    //background: linear-gradient(top, $dark, $light, $dark);
+  }
+
+  // componente funzione obbligatoria
+  //$dark: rgb(218, 42, 156);
+  //$light: rgba(218, 42, 156, 0.6);
+  .cfunzioneobblig {
+    @extend .cbasecell;
+    font-weight: bold;
+
+    //background: $dark;
+    //background: -webkit-linear-gradient(top, $dark, $light, $dark);
+    //background: -moz-linear-gradient(top, $dark, $light, $dark);
+    //background: -o-linear-gradient(top, $dark, $light, $dark);
+    //background: linear-gradient(top, $dark, $light, $dark);
+  }
+
+  //// componente base giorno
+  //.cgiorno {
+  //  @extend .cbasecell;
+  //  color: white;
+  //  text-align: center;
+  //  border-radius: 6px;
+  //}
+
+  // colore base del giorno
+  $dark: rgb(101, 101, 104);
+  $light: rgba(101, 101, 104, 0.6);
+  .cgiorno {
+    @extend .cbasecell;
+
+    background: $dark;
+    background: -webkit-linear-gradient(top, $dark, $light, $dark);
+    background: -moz-linear-gradient(top, $dark, $light, $dark);
+    background: -o-linear-gradient(top, $dark, $light, $dark);
+    background: linear-gradient(top, $dark, $light, $dark);
+
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+
+  }
+
+  // colore del giorno di oggi
+  $dark: rgba(93, 85, 169, 1);
+  $light: rgba(93, 85, 169, 0.6);
+  .cgiorno-today {
+    background: $dark;
+    background: -webkit-linear-gradient(top, $dark, $light, $dark);
+    background: -moz-linear-gradient(top, $dark, $light, $dark);
+    background: -o-linear-gradient(top, $dark, $light, $dark);
+    background: linear-gradient(top, $dark, $light, $dark);
+  }
+
+  // colore dei giorni festivi
+  $dark: rgba(209, 53, 29, 1);
+  $light: rgba(209, 53, 29, 0.6);
+  .cgiorno-festivo {
+    background: $dark;
+    background: -webkit-linear-gradient(top, $dark, $light, $dark);
+    background: -moz-linear-gradient(top, $dark, $light, $dark);
+    background: -o-linear-gradient(top, $dark, $light, $dark);
+    background: linear-gradient(top, $dark, $light, $dark);
+  }
+
+
+
+
+
+
+  // componente turno di base
+  .cturno {
+    @extend .cbasecell;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    //padding-top: 0.5em;
+    cursor: pointer;
+  }
+
+  // componente turno di oggi
+  .cturno-today {
+    background: rgba(58, 58, 127, 0.65);
+  }
+
+  // componente turno valido
+  .cturno-ok {
+    background: rgb(0, 140, 13);
+  }
+
+  // componente turno in warning
+  .cturno-warning {
+    background: rgba(237, 237, 0, 0.4);
+  }
+
+  // componente turno in alert
+  .cturno-alert {
+    background: rgba(206, 18, 10, 0.89);
+  }
+
+
+  // titolo del turno
+  .cturno-title{
+    font-size: small;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // componente no turno
+  .cnoturno {
+    @extend .cbasecell;
+    background: repeating-linear-gradient(
+                    135deg,
+                    rgba(0, 0, 0, 0.05),
+                    rgba(0, 0, 0, 0.05) 0.3em,
+                    rgba(0, 0, 0, 0.0) 0.3em,
+                    rgba(0, 0, 0, 0.0) 0.6em
+    );
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  // componente iscrizione
+  .ciscrizione {
+    @extend .cbasecell;
+    border-radius: 6px;
+    border-bottom-width: thin;
+    border-bottom-style: solid;
+    border-bottom-color: rgba(255, 255, 255,0.9);
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+
+  }
+
+  // componente iscrizione - testo scuro
+  .ciscrizione-dark {
+    color: black;
+  }
+
+  // componente iscrizione - testo chiaro
+  .ciscrizione-light {
+    color: white;
+  }
+
+
+
+}
