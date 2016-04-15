@@ -16,7 +16,7 @@ import java.io.IOException;
 @Theme("valo")
 @WebServlet(urlPatterns = { "/gcm/*" , "/VAADIN/*" }, asyncSupported = true, displayName = "Gcm")
 @VaadinServletConfiguration(productionMode = false, ui = GCMUI.class)
-public class GCMServlet extends AlgosServlet {
+public class UIServlet extends AlgosServlet {
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

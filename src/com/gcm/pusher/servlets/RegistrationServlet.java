@@ -16,8 +16,8 @@ import java.io.IOException;
 /**
  * Servlet che riceve le richieste di registrazione dai devices
  */
-@WebServlet(urlPatterns = { RegisterServlet.GCM_REG }, asyncSupported = true)
-public class RegisterServlet extends HttpServlet {
+@WebServlet(urlPatterns = { RegistrationServlet.GCM_REG }, asyncSupported = true)
+public class RegistrationServlet extends HttpServlet {
 
     public static final String GCM_REG="/gcm-reg";
 

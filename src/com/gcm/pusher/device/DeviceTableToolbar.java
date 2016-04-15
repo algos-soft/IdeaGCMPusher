@@ -1,6 +1,6 @@
 package com.gcm.pusher.device;
 
-import com.gcm.pusher.servlets.RegisterServlet;
+import com.gcm.pusher.servlets.RegistrationServlet;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.UI;
@@ -36,7 +36,7 @@ public class DeviceTableToolbar extends TableToolbar {
                 int port = uri.getPort();
 
                 String addr = "Url per la registrazione:<br><br><strong>http://XXX.XXX.XXX.XXX:"+port+
-                        RegisterServlet.GCM_REG+"</strong><br><br>(sostituisci XXX.XXX.XXX.XXX con " +
+                        RegistrationServlet.GCM_REG+"</strong><br><br>(sostituisci XXX.XXX.XXX.XXX con " +
                         "l'indirizzo IP del server)";
 
                 AlertDialog dialog=new AlertDialog(addr);
