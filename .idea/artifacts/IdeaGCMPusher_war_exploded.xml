@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="IdeaGCMPusher:war exploded">
-    <output-path>$PROJECT_DIR$/out/artifacts/IdeaGCMPusher_war_exploded</output-path>
+    <output-path>$PROJECT_DIR$/out/artifacts/GCMPusher</output-path>
     <root id="root">
       <element id="javaee-facet-resources" facet="IdeaGCMPusher/web/Web" />
       <element id="directory" name="WEB-INF">
@@ -9,6 +9,7 @@
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="webbase" />
+          <element id="library" level="module" name="IvyIDEA" module-name="IdeaGCMPusher" />
         </element>
       </element>
       <element id="directory" name="VAADIN">
