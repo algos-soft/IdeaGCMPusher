@@ -24,6 +24,14 @@ public class DeviceTableToolbar extends TableToolbar {
         super();
 
 
+        // bottone refresh
+        addButton("Refresh", FontAwesome.REFRESH, new MenuBar.Command() {
+            @Override
+            public void menuSelected(MenuBar.MenuItem selectedItem) {
+                table.refresh();
+            }
+        });
+
         // bottone url
         addButton("Url", FontAwesome.LINK, new MenuBar.Command() {
             @Override

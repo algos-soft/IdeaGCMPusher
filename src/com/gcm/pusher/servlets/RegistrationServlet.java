@@ -6,8 +6,7 @@ import com.gcm.pusher.log.Log;
 import it.algos.webbase.web.entity.BaseEntity;
 import it.algos.webbase.web.query.AQuery;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,41 +18,41 @@ import java.util.List;
 /**
  * Servlet che riceve le richieste di registrazione dai devices
  */
-@WebServlet(urlPatterns = { RegistrationServlet.GCM_REG }, asyncSupported = true)
+@WebServlet(urlPatterns = {RegistrationServlet.GCM_REG}, asyncSupported = true)
 public class RegistrationServlet extends HttpServlet {
 
-    private static List<RegistrationListener> regListeners=new ArrayList<>();
+    private static List<RegistrationListener> regListeners = new ArrayList<>();
 
-    public static final String GCM_REG="/gcm-reg";
+    public static final String GCM_REG = "/gcm-reg";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action=req.getParameter("action"); //"R=register, U=unregister"
-        String name=req.getParameter("name");
-        String model=req.getParameter("model");
-        String android_id=req.getParameter("android_id");
-        String gcm_token=req.getParameter("gcm_token");
+        String action = req.getParameter("action"); //"R=register, U=unregister"
+        String name = req.getParameter("name");
+        String model = req.getParameter("model");
+        String android_id = req.getParameter("android_id");
+        String gcm_token = req.getParameter("gcm_token");
 
-        if(action==null || action.isEmpty()){
+        if (action == null || action.isEmpty()) {
             Log.e("REG", "missing parameter: action");
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
 
-        if(!(action.equalsIgnoreCase("R") || action.equalsIgnoreCase("U"))){
-            Log.e("REG", "wrong parameter: action="+action);
+        if (!(action.equalsIgnoreCase("R") || action.equalsIgnoreCase("U"))) {
+            Log.e("REG", "wrong parameter: action=" + action);
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
 
-        if(android_id==null || android_id.isEmpty()){
+        if (android_id == null || android_id.isEmpty()) {
             Log.e("REG", "missing parameter: android_id");
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
 
-        if(action.equalsIgnoreCase("R")){
-            if(gcm_token==null || gcm_token.isEmpty()){
+        if (action.equalsIgnoreCase("R")) {
+            if (gcm_token == null || gcm_token.isEmpty()) {
                 Log.e("REG", "missing parameter: gcm_token");
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 return;
@@ -61,9 +60,9 @@ public class RegistrationServlet extends HttpServlet {
 
         }
 
-        if(action.equalsIgnoreCase("R")){
+        if (action.equalsIgnoreCase("R")) {
             register(android_id, gcm_token, name, model);
-        }else{
+        } else {
             unregister(android_id);
         }
 
@@ -75,35 +74,35 @@ public class RegistrationServlet extends HttpServlet {
     /**
      * Register new device or update existing device
      */
-    private void register(String android_id, String gcm_token, String name, String model){
+    private void register(String android_id, String gcm_token, String name, String model) {
         BaseEntity entity = AQuery.queryOne(Device.class, Device_.deviceId, android_id);
         Device device;
-        boolean created=false;
-        if(entity!=null){
-            device = (Device)entity;
+        boolean created = false;
+        if (entity != null) {
+            device = (Device) entity;
             device.setToken(gcm_token);
-            if(name!=null && !name.isEmpty()){
+            if (name != null && !name.isEmpty()) {
                 device.setName(name);
             }
-            if(model!=null && !model.isEmpty()){
+            if (model != null && !model.isEmpty()) {
                 device.setModel(model);
             }
-            Log.d("REG", "device updated: "+android_id);
-        }else{
+            Log.d("REG", "device updated: " + android_id);
+        } else {
             device = new Device();
             device.setDeviceId(android_id);
             device.setToken(gcm_token);
             device.setName(name);
             device.setModel(model);
-            Log.d("REG", "device registered: "+android_id);
-            created=true;
+            Log.d("REG", "device registered: " + android_id);
+            created = true;
         }
         device.save();
 
-        if(created){
-            fireCreated(device);
-        }else{
-            fireUpdated(device);
+        if (created) {
+            fireListeners(device, "C");
+        } else {
+            fireListeners(device, "U");
         }
 
     }
@@ -111,49 +110,44 @@ public class RegistrationServlet extends HttpServlet {
     /**
      * Unregister (delete) existing device
      */
-    private void unregister(String android_id){
+    private void unregister(String android_id) {
         BaseEntity entity = AQuery.queryOne(Device.class, Device_.deviceId, android_id);
-        if(entity!=null){
-            Device device = (Device)entity;
+        if (entity != null) {
+            Device device = (Device) entity;
             AQuery.delete(Device.class, Device_.deviceId, android_id);
-            fireDeleted(device);
-            Log.d("REG", "device unregistered: "+android_id);
-        }else{
-            Log.e("REG", "unregistering device: android_id not found: id="+android_id);
+            fireListeners(device, "D");
+            Log.d("REG", "device unregistered: " + android_id);
+        } else {
+            Log.e("REG", "unregistering device: android_id not found: id=" + android_id);
         }
     }
 
 
-    public static void addRegistrationListener(RegistrationListener l){
+    public static void addRegistrationListener(RegistrationListener l) {
         regListeners.add(l);
     }
 
-    public static void removeAllRegistrationListeners(){
+    public static void removeAllRegistrationListeners() {
         regListeners.clear();
     }
 
-    public interface RegistrationListener{
-        void deviceCreated(Device device);
-        void deviceUpdated(Device device);
-        void deviceDeleted(Device device);
+    public interface RegistrationListener {
+        /**
+         * E' stata servita una richiesta di registrazione.
+         *
+         * @param device  il device
+         * @param regType il tipo di richiesta ('C'=create, 'U'=update, 'D'=delete)
+         */
+        void requestServed(Device device, String regType);
+
     }
 
-    private void fireCreated(Device device){
-        for(RegistrationListener l : regListeners){
-            l.deviceCreated(device);
+    private void fireListeners(Device device, String regType) {
+        for (RegistrationListener l : regListeners) {
+            l.requestServed(device, regType);
         }
     }
 
-    private void fireDeleted(Device device){
-        for(RegistrationListener l : regListeners){
-            l.deviceDeleted(device);
-        }
-    }
-    private void fireUpdated(Device device){
-        for(RegistrationListener l : regListeners){
-            l.deviceUpdated(device);
-        }
-    }
 
 
 

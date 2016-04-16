@@ -153,55 +153,6 @@ public class NavComponent extends VerticalLayout {
         return menuItem;
     }
 
-    /**
-     * Aggiunge un modulo alla UI
-     * <p/>
-     * Il modulo può essere aggiunto come istanza già creata
-     * Tipicamente un ModulePop
-     *
-     * @param modulo da visualizzare nel placeholder alla pressione del bottone di menu
-     * @return menuItem appena creato
-     */
-    public MenuBar.MenuItem addMod(ModulePop modulo) {
-        MenuBar.MenuItem menuItem = null;
-        String menuLabel;
-        Resource menuIcon = null;
-
-        if (modulo != null) {
-            menuLabel = modulo.getMenuLabel();
-            menuIcon = modulo.getMenuIcon();
-            menuItem = addVista(modulo, menuLabel, menuIcon);
-
-            if (menuItem != null) {
-                modulo.addSottoMenu(menuItem);
-            }// end of if cycle
-        }// end of if cycle
-
-        return menuItem;
-    }// end of method
-
-
-    /**
-     * Aggiunge una view alla UI
-     * <p/>
-     * La view può essere aggiunto come istanza già creata
-     * Qualunque oggetto grafico che implementi l'interfaccia View
-     *
-     * @param vista     da visualizzare nel placeholder alla pressione del bottone di menu
-     * @param menuLabel etichetta visibile nella menu bar
-     * @param menuIcon  icona del menu
-     */
-    public MenuBar.MenuItem addVista(View vista, String menuLabel, Resource menuIcon) {
-        String keyModulo = "";
-        MenuBar.MenuItem menuItem = createMenuItem(vista, menuLabel, menuIcon);
-
-        if (menuItem != null) {
-            keyModulo = vista.getClass().getSimpleName();
-            mappaItem.put(keyModulo, menuItem);
-        }// end of if cycle
-
-        return menuItem;
-    }// end of method
 
     /**
      * Create the MenuBar Item for this view
