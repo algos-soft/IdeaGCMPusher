@@ -20,8 +20,8 @@
 
     <dependencies defaultconf="default" defaultconfmapping="default->default">
 
-        <!-- Cron4j -->
-        <dependency org="it.sauronsoftware.cron4j" name="cron4j" rev="2.2.5"/>
+        <dependency org="com.vaadin" name="vaadin-push"
+                    rev="&vaadin.version;" conf="default->default"/>
 
     </dependencies>
 </ivy-module>

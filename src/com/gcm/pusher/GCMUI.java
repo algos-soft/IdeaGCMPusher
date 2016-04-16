@@ -2,9 +2,11 @@ package com.gcm.pusher;
 
 import com.gcm.pusher.device.DevicesModule;
 import com.gcm.pusher.log.LogModule;
+import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.shared.communication.PushMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 
@@ -16,8 +18,8 @@ public class GCMUI extends UI {
      */
     @Override
     protected void init(VaadinRequest request) {
-//        this.setContent(new DevicesModule());
         this.setContent(creaCompUI());
+        setPollInterval(1000);
     }
 
     /**
@@ -31,10 +33,8 @@ public class GCMUI extends UI {
         NavComponent nc = new NavComponent(this);
 
         // aggiungo le view - la menubar viene riempita automaticamente
-        nc.addView(DevicesModule.class, false, "Devices", FontAwesome.TABLET);
-        nc.addView(LogModule.class, false, "Log", FontAwesome.LIST);
-
-//        nc.addMod(new DevicesModule());
+        nc.addView(DevicesModule.class, true, "Devices", FontAwesome.TABLET);
+        nc.addView(LogModule.class, true, "Log", FontAwesome.LIST);
 
         // da chiamare dopo che ho aggiunto tutti i MenuItems,
         // configura il Navigator in base alla MenuBar
