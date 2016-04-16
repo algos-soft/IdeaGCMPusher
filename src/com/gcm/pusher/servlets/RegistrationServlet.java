@@ -127,6 +127,11 @@ public class RegistrationServlet extends HttpServlet {
         regListeners.add(l);
     }
 
+    public static void removeRegistrationListener(RegistrationListener l) {
+        regListeners.remove(l);
+    }
+
+
     public static void removeAllRegistrationListeners() {
         regListeners.clear();
     }

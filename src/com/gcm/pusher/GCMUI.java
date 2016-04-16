@@ -7,6 +7,7 @@ import com.gcm.pusher.servlets.RegistrationServlet;
 import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
+import com.vaadin.server.ClientConnector;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Component;
@@ -23,21 +24,35 @@ public class GCMUI extends UI {
 
     private NavComponent navigator;
 
+    // Listener da aggiungere al servlet, viene notificato ad ogni richiesta servita.
+    private RegistrationServlet.RegistrationListener regListener = new RegistrationServlet.RegistrationListener() {
+        @Override
+        public void requestServed(Device device, String regType) {
+            refreshDeviceList();
+        }
+    };
+
     public GCMUI() {
 
-        // la collezione dei listeners è statica, per sicurezza rimuovo tutti
-        // i listeners prima di aggiungerli
-        RegistrationServlet.removeAllRegistrationListeners();
 
-        // aggiungo i listeners al servlet
-        RegistrationServlet.addRegistrationListener(new RegistrationServlet.RegistrationListener() {
+        // la collezione dei listeners è statica, ricordati di togliere sempre i listener che hai aggiunto
+        addAttachListener(new AttachListener() {
             @Override
-            public void requestServed(Device device, String regType) {
-                refreshDeviceList();
+            public void attach(AttachEvent event) {
+                RegistrationServlet.addRegistrationListener(regListener);
+            }
+        });
+
+        addDetachListener(new DetachListener() {
+            @Override
+            public void detach(DetachEvent event) {
+                RegistrationServlet.removeRegistrationListener(regListener);
             }
         });
 
     }
+
+
 
     /**
      * @param request the Vaadin request that caused this UI to be created
